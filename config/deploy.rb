@@ -13,7 +13,7 @@ set :rvm_ruby_string, "1.9.3"
 set :rvm_type, :user
 
 set :application, "chatty"
-set :repository,  "git@github.tenderlove/chatty.git"
+set :repository,  "git@github.com:tenderlove/chatty.git"
 
 set :scm, :git
 ssh_options[:forward_agent] = true
