@@ -1,4 +1,4 @@
 Chatty::Application.routes.draw do
   resources :messages
-  root to: 'messages#index'
+  root to: 'messages#show'
 end
