@@ -6,8 +6,16 @@ Type "/nick yourname" to change your nickname.
 <script>
   var nickname = '<%= h(session[:name]) %>';
 
-  function trimRoom() {
+  function listener(e) {
+    var event    = JSON.parse(e.data);
     var room     = $('#chatroom');
+    var li_class = "other";
+
+    if (event.me == "yes") {
+      li_class = "me";
+    }
+
+    room.append("<li class=\"" + li_class + "\">" + event.who + ": " + event.value + "</li>");
 
     while(room.children().size() > 30) {
       room.children().first().remove();
@@ -18,17 +26,16 @@ Type "/nick yourname" to change your nickname.
     $("#messages-form").bind('ajax:success', function(data, status, xhr) {
       $("#messages-form").find(':input').each(function() {
         if(this.type == 'text') {
-          var room    = $('#chatroom');
           var message = $(this).val();
-          var name    = nickname;
           var match   = /^\/nick\s*(.*)$/.exec(message);
+          var obj     = { me: 'yes', who: nickname };
+          var uri     = parseUri(message);
 
           if (match) {
             message = "changed name to " + match[1];
             nickname = match[1];
           }
 
-          var uri = parseUri(message);
           if (uri && uri.protocol == 'http') {
             if (/\.(png|jpg|gif)$/.exec(uri.path)) {
               message = "<img src=\"" + message + "\" />";
@@ -39,30 +46,16 @@ Type "/nick yourname" to change your nickname.
             message = makeSafe(message);
           }
 
-          room.append($("<li class=\"me\">" + makeSafe(name) + ": " + message + "</li>"));
-
-          trimRoom();
-
           $(this).val('');
+
+          obj.value = message;
+          listener({ data: JSON.stringify(obj) });
         }
       });
     });
 
     var source = new EventSource('/messages/show.json');
-    source.addEventListener('message', function(e) {
-      var event    = JSON.parse(e.data);
-      var room     = $('#chatroom');
-      var li_class = "other";
-
-      if (event.me == "yes") {
-        li_class = "me";
-      }
-
-      room.append("<li class=\"" + li_class + "\">" + event.who + ": " +
-        event.value + "</li>");
-
-      trimRoom();
-    });
+    source.addEventListener('message', listener);
   });
 </script>
 
