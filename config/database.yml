@@ -6,7 +6,7 @@
 development:
   adapter: postgresql
   database: chatty_development
-  pool: 16
+  pool: 20
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -14,9 +14,9 @@ development:
 test:
   adapter: postgresql
   database: chatty_test
-  pool: 16
+  pool: 20
 
 production:
   adapter: postgresql
   database: chatty_production
-  pool: 16
+  pool: 20
