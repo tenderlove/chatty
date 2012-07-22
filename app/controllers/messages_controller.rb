@@ -2,8 +2,6 @@ require 'securerandom'
 require 'mutex_m'
 
 class MessagesController < ApplicationController
-  include ERB::Util
-
   class ServerSend
     def initialize io
       @io = io
@@ -38,6 +36,9 @@ class MessagesController < ApplicationController
   end
 
   def show
+    session[:id]   ||= SecureRandom.urlsafe_base64
+    session[:name] ||= "Guest"
+
     respond_to do |format|
       format.html
       format.json do
@@ -48,8 +49,6 @@ class MessagesController < ApplicationController
 
           Message.add_observer Listener.new(Message.maximum(:id), queue)
 
-          session[:id]   ||= SecureRandom.urlsafe_base64
-          session[:name] ||= "Guest#{session[:id].slice(0, 2)}"
 
           while event = queue.pop
             ss.write event.event_hash

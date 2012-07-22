@@ -10,6 +10,13 @@
         }
       });
     });
+
+    var source = new EventSource('/messages/show.json');
+    source.addEventListener('message', function(e) {
+      var event = JSON.parse(e.data);
+      var chat = document.getElementById('chatroom');
+      $(chat).append("<li>" + event.who + " said: " + event.value + "</li>");
+    });
   });
 </script>
 

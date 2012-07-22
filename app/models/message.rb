@@ -1,6 +1,9 @@
 require 'tusk/observable/pg'
+require 'erb'
 
 class Message < ActiveRecord::Base
+  include ERB::Util
+
   attr_accessible :value, :who
 
   extend Tusk::Observable::PG
@@ -16,8 +19,8 @@ class Message < ActiveRecord::Base
   def event_hash
     {
       'type'  => 'message',
-      'who'   => who,
-      'value' => value
+      'who'   => h(who),
+      'value' => h(value)
     }
   end
 
