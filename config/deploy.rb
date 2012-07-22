@@ -34,6 +34,8 @@ set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
 
 set :bundle_roles, [:app]
 
+set :rake, "#{rake} --trace"
+
 role :web, "chat.interhub.net"
 role :app, "chat.interhub.net"
 role :db,  "chat.interhub.net", :primary => true
