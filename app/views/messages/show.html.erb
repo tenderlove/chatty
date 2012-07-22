@@ -6,6 +6,14 @@ Type "/nick yourname" to change your nickname.
 <script>
   var nickname = '<%= h(session[:name]) %>';
 
+  function trimRoom() {
+    var room     = $('#chatroom');
+
+    while(room.children().size() > 30) {
+      room.children().first().remove();
+    }
+  }
+
   jQuery(document).ready(function() {
     $("#messages-form").bind('ajax:success', function(data, status, xhr) {
       $("#messages-form").find(':input').each(function() {
@@ -31,8 +39,9 @@ Type "/nick yourname" to change your nickname.
             message = makeSafe(message);
           }
 
-        room.append($("<li class=\"me\">" +
-          makeSafe(name) + ": " + message + "</li>"));
+          room.append($("<li class=\"me\">" + makeSafe(name) + ": " + message + "</li>"));
+
+          trimRoom();
 
           $(this).val('');
         }
@@ -52,9 +61,7 @@ Type "/nick yourname" to change your nickname.
       room.append("<li class=\"" + li_class + "\">" + event.who + ": " +
         event.value + "</li>");
 
-      while(room.children().size() > 30) {
-        room.children().first().remove();
-      }
+      trimRoom();
     });
   });
 </script>
