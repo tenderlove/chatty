@@ -45,15 +45,13 @@ ul, li {
 
 #chatroom > .me {
   background-color: #ee4030 !important; 
-  color: #ffffff;
-}
-
-#chatroom > .other {
-  background-color: #00a4dd !important; 
   color: black;
 }
 
-.other { }
+#chatroom > .other {
+  background-color: white !important; 
+  color: black;
+}
 
 #topbar {
   border-radius: 0;
