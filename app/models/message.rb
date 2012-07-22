@@ -28,8 +28,12 @@ class Message < ActiveRecord::Base
   def imgval
     begin
       uri = URI(value)
-      if uri.scheme == 'http' && uri.path =~ /\.(jpg|png|gif)$/
-        "<img src=\"#{value}\" />"
+      if uri.scheme == 'http'
+        if uri.path =~ /\.(jpg|png|gif)$/
+          "<img src=\"#{value}\" />"
+        else
+          "<a href=\"#{value}\">#{h(value)}</a>"
+        end
       else
         h(value)
       end
