@@ -1,6 +1,7 @@
-Type "/nick yourname" to change your nickname.
+<p>Type "/nick yourname" to change your nickname.</p>
 
-<ul id="chatroom">
+<ul id="chatroom" class="box">
+  <li class="box-header">conversation</li>
 </ul>
 
 <script>
@@ -17,7 +18,7 @@ Type "/nick yourname" to change your nickname.
 
     room.append("<li class=\"" + li_class + "\">" + event.who + ": " + event.value + "</li>");
 
-    while(room.children().size() > 30) {
+    while(room.children().size() > 15) {
       room.children().first().remove();
     }
   }
@@ -61,5 +62,4 @@ Type "/nick yourname" to change your nickname.
 
 <%= form_tag('/messages', :remote => true, :id => 'messages-form') do  %>
   <%= text_field_tag 'message' %>
-  <%= submit_tag 'Send' %>
 <% end %>

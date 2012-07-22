@@ -50,7 +50,7 @@ class MessagesController < ApplicationController
 
           Message.add_observer observer
 
-          Message.limit(30).order("id desc").all.reverse_each do |m|
+          Message.limit(15).order("id desc").all.reverse_each do |m|
             hash       = m.event_hash
             hash['me'] = m.uid == session[:id] ? 'yes' : 'no'
             ss.write hash

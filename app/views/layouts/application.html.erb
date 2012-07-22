@@ -3,12 +3,43 @@
 <head>
   <title>Chatty</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= stylesheet_link_tag    "bootstrap", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
 </head>
-<body>
+<body id="home">
+
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">CHATTY APP</a>
+        <div class="nav-collapse">
+          <ul class="box">
+            <li class="active">Live</li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="frame">
 
 <%= yield %>
 
+      </div><!--/.well -->
+    </div><!--/row-->
+  </div><!--/.fluid-container-->
 </body>
 </html>
