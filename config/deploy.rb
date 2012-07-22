@@ -5,7 +5,7 @@ load 'deploy/assets'
 require "rvm/capistrano"
 
 # Multi-stage support
-set :stages, %w(staging production)
+set :stages, %w(production)
 require 'capistrano/ext/multistage'
 
 #set :rvm_path, "$HOME/.rvm"
