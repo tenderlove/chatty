@@ -20,9 +20,22 @@ class Message < ActiveRecord::Base
     {
       'type'  => 'message',
       'who'   => h(who),
-      'value' => h(value),
+      'value' => imgval,
       'uid'   => h(uid)
     }
+  end
+
+  def imgval
+    begin
+      uri = URI(value)
+      if uri.scheme == 'http' && uri.path =~ /\.(jpg|png|gif)$/
+        "<img src=\"#{value}\" />"
+      else
+        h(value)
+      end
+    rescue
+      value
+    end
   end
 
   private
