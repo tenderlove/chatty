@@ -24,8 +24,8 @@ html {
   color: #222;            /* Foreground color used for text */
   font-family: Helvetica; 
   font-size: 14px;
-  padding-bottom: 40px;
   background-color: #f7eac5;
+  padding: 0 0 40px 0;
 }
 
 ul, li { 
@@ -54,6 +54,10 @@ ul, li {
 }
 
 .other { }
+
+#topbar {
+  border-radius: 0;
+}
 
 .navbar .box > .active {
   float: none;
@@ -100,6 +104,7 @@ ul, li {
 }
 .container {
   width: 90% !important;
+  padding: 10px 0;
 }
 .container {
   padding-right: 20px;
