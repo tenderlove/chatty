@@ -5,8 +5,8 @@ load 'deploy/assets'
 require "rvm/capistrano"
 
 # Multi-stage support
-set :stages, %w(production)
-require 'capistrano/ext/multistage'
+#set :stages, %w(production)
+#require 'capistrano/ext/multistage'
 
 #set :rvm_path, "$HOME/.rvm"
 set :rvm_ruby_string, "1.9.3"
@@ -33,6 +33,11 @@ set :scm_verbose, true
 set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
 
 set :bundle_roles, [:app]
+
+role :web, "chat.interhub.net"
+role :app, "chat.interhub.net"
+role :db,  "chat.interhub.net", :primary => true
+
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy", "deploy:cleanup"
