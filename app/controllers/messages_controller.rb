@@ -44,10 +44,11 @@ class MessagesController < ApplicationController
       format.json do
         begin
           response.headers['Content-Type'] = 'text/event-stream'
-          ss    = ServerSend.new response.stream
-          queue = Queue.new
+          ss       = ServerSend.new response.stream
+          queue    = Queue.new
+          observer = Listener.new(Message.maximum(:id), queue)
 
-          Message.add_observer Listener.new(Message.maximum(:id), queue)
+          Message.add_observer observer
 
           Message.limit(30).order("id desc").all.reverse_each do |m|
             hash       = m.event_hash
@@ -64,6 +65,7 @@ class MessagesController < ApplicationController
             ss.write hash
           end
         ensure
+          Message.delete_observer observer
           ss.close
         end
       end
