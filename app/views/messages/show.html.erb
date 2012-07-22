@@ -1,0 +1,19 @@
+<ul id="chatroom">
+</ul>
+
+<script>
+  jQuery(document).ready(function() {
+    $("#messages-form").bind('ajax:success', function(data, status, xhr) {
+      $("#messages-form").find(':input').each(function() {
+        if(this.type == 'text') {
+          $(this).val('');
+        }
+      });
+    });
+  });
+</script>
+
+<%= form_tag('/messages', :remote => true, :id => 'messages-form') do  %>
+  <%= text_field_tag 'message' %>
+  <%= submit_tag 'Send' %>
+<% end %>
