@@ -20,4 +20,3 @@ production:
   adapter: postgresql
   database: chatty_production
   pool: 5
-  username: root
