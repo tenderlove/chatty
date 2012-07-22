@@ -4,7 +4,7 @@ require 'erb'
 class Message < ActiveRecord::Base
   include ERB::Util
 
-  attr_accessible :value, :who
+  attr_accessible :value, :who, :uid
 
   extend Tusk::Observable::PG
 
@@ -20,7 +20,8 @@ class Message < ActiveRecord::Base
     {
       'type'  => 'message',
       'who'   => h(who),
-      'value' => h(value)
+      'value' => h(value),
+      'uid'   => h(uid)
     }
   end
 

@@ -49,9 +49,14 @@ class MessagesController < ApplicationController
 
           Message.add_observer Listener.new(Message.maximum(:id), queue)
 
+          Message.limit(30).order("id desc").all.reverse_each do |m|
+            queue.push m
+          end
 
           while event = queue.pop
-            ss.write event.event_hash
+            hash       = event.event_hash
+            hash['me'] = event.uid == session[:id] ? 'yes' : 'no'
+            ss.write hash
           end
         ensure
           ss.close
@@ -61,9 +66,20 @@ class MessagesController < ApplicationController
   end
 
   def create
-    if session[:name]
-      Message.create! :value => params[:message], :who => session[:name]
+    return render :nothing => true unless session[:name] && session[:id]
+
+    name    = session[:name]
+    message = params[:message]
+
+    if message =~ /^\/nick\s*(.*)$/
+      message = "changed name to #{$1}"
+
+      session[:name] = $1
     end
+
+    Message.create! :value => message,
+                    :who   => name,
+                    :uid   => session[:id]
 
     render :nothing => true
   end

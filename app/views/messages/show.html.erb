@@ -1,3 +1,5 @@
+Type "/nick yourname" to change your nickname.
+
 <ul id="chatroom">
 </ul>
 
@@ -14,8 +16,11 @@
     var source = new EventSource('/messages/show.json');
     source.addEventListener('message', function(e) {
       var event = JSON.parse(e.data);
-      var chat = document.getElementById('chatroom');
-      $(chat).append("<li>" + event.who + " said: " + event.value + "</li>");
+      var room = $('#chatroom');
+      room.append("<li>" + event.who + ": " + event.value + "</li>");
+      while(room.children().size() > 30) {
+        room.children().first().remove();
+      }
     });
   });
 </script>

@@ -6,6 +6,7 @@ gem "arel",      github: "rails/arel"
 gem "active_record_deprecated_finders", github: "rails/active_record_deprecated_finders"
 
 gem "pg"
+gem 'tusk'
 gem "puma"
 gem "execjs"
 
