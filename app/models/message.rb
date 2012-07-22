@@ -38,7 +38,7 @@ class Message < ActiveRecord::Base
         h(value)
       end
     rescue
-      value
+      h(value)
     end
   end
 

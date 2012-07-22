@@ -4,10 +4,36 @@ Type "/nick yourname" to change your nickname.
 </ul>
 
 <script>
+  var nickname = '<%= h(session[:name]) %>';
+
   jQuery(document).ready(function() {
     $("#messages-form").bind('ajax:success', function(data, status, xhr) {
       $("#messages-form").find(':input').each(function() {
         if(this.type == 'text') {
+          var room    = $('#chatroom');
+          var message = $(this).val();
+          var name    = nickname;
+          var match   = /^\/nick\s*(.*)$/.exec(message);
+
+          if (match) {
+            message = "changed name to " + match[1];
+            nickname = match[1];
+          }
+
+          var uri = parseUri(message);
+          if (uri && uri.protocol == 'http') {
+            if (/\.(png|jpg|gif)$/.exec(uri.path)) {
+              message = "<img src=\"" + message + "\" />";
+            } else {
+              message = "<a href=\"" + message + "\">" + makeSafe(message) + "</a>";
+            }
+          } else {
+            message = makeSafe(message);
+          }
+
+        room.append($("<li class=\"me\">" +
+          makeSafe(name) + ": " + message + "</li>"));
+
           $(this).val('');
         }
       });
